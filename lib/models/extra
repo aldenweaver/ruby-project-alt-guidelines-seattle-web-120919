@@ -1,0 +1,158 @@
+#     def offer_or_search 
+#         puts "Would you like to offer up a shift (type 'offer'),
+#                 search for a shift (type 'search'),
+#                 delete a shift (type 'delete'),
+#                 or see all your shifts (type 'my_shifts')?"
+
+#         response = gets.chomp
+#         if response == "offer"
+#             offer
+#         end
+#         if response == "search"
+#             search
+#         end
+#         if response == "delete"
+#             delete
+#         end
+#         if response == "my_shifts"
+#             display_user_shifts
+#         end
+#         else
+#             puts "Please enter in a valid response!"
+#             check_response
+#         end
+#     end
+
+#     # def offer
+#     #     puts "Please enter a store ID: "
+#     #     store_id = gets.chomp
+
+#     #     puts "Please enter a start day in the format MM/DD/YYY: "
+#     #     start_date = gets.chomp
+
+#     #     puts "Please enter a end day in the format MM/DD/YYY: "
+#     #     end_date = gets.chomp
+
+#     #     puts "Please enter a start time in military time in the format HH:MM: "
+#     #     start_time = gets.chomp
+
+#     #     puts "Please enter a start day in military time in the format HH:MM: "
+#     #     end_time = gets.chomp
+
+#     #     INSERT INTO 
+#     #         shifts.user_id, 
+#     #         shifts.store_id, 
+#     #         shifts.start_date,
+#     #         shifts.end_date,
+#     #         shifts.start_time, 
+#     #         shifts.end_time 
+#     #     VALUES
+#     #         user.id
+#     #         store_id, 
+#     #         start_date,
+#     #         end_date,
+#     #         start_time, 
+#     #         end_time 
+    
+#     # Handle errors
+#     # Provide success message
+            
+#     # end
+
+#     def search
+#         check_search_response
+
+#         shift_take_ask
+#     end
+
+#     def shift_take_ask
+#         puts "Would you like to take any of these shifts (Y/N)?"
+#         response = gets.chomp
+
+#         if response == "Y"
+#             which_shift
+#             take_shift
+#         end
+
+#         if response == "N"
+#             dont_take_shift
+#         end
+
+#         else
+#             puts "Please enter a valid response!"
+#         end
+#     end
+
+#     def which_shift
+#         puts "Which shift would you like to take? 
+#             Please enter in the shift ID."
+#         shift_id = gets.chomp
+#         #
+
+#     end
+
+#     def take_shift
+#         #change taken_user_id from null to current user_id
+#     end
+
+#     def dont_take_shift
+
+#     end
+
+#     def check_search_response
+#         puts "Would you like to search by day (type 'day'),
+#                 store (type 'store'), 
+#                 or see all open shifts (type 'all')"
+#         response = gets.chomp
+
+#         if response == "day"
+#             search_by_day
+#         end
+#         if response == "store"
+#             search_by_store
+#         end
+#         if response == "all"
+#             search_all
+#         end
+#         else
+#             puts "Please enter in a valid response!"
+#             check_search_response
+#         end
+#     end
+
+#     def search_by_day
+#         puts "Please enter a day in the format MM/DD/YYYY:"
+#         day = gets.chomp
+#         SELECT * FROM shifts WHERE start_date == day OR end_date == day
+#         # Handle not found error
+#         # puts "Please enter a correct date."
+#         # puts "No open shifts found for this day."
+#     end
+
+#     def search_by_store
+#         puts "Please enter a store ID: "
+#         store_id = gets.chomp
+#         SELECT * FROM shifts WHERE shifts.store_id == store_id
+         
+#         # Handle not found error
+#         # puts "Store not found. Please check the ID and try again."
+#         # puts "No open shifts found for this store."
+#     end
+
+#     def search_all
+#         # Will return only shifts that are available; 
+#         # i.e. shifts that have empty taken_user_ids
+#         SELECT * FROM shifts WHERE taken_user_id IS NULL
+#         # Handle not found error
+#         # puts "No empty shifts found, please try again later!"
+#     end
+
+#     # def delete
+#     #     puts "Please enter a shift ID to delete: "
+#     #         shift_id = gets.chomp
+#     #         DELETE * FROM shifts WHERE shift_id == shift_id
+#     # Handle not found error
+#     # Provide success message
+#     # end
+#     end
+# end
