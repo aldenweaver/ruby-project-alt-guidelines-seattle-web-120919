@@ -113,9 +113,9 @@ class CommandLineInterface
     # # take_shift shift_id - update 
     # # (updates the user_id on the shift)
     def take_shift(shift_id)
-        shift = Shift.find_by id: shift_id
-        shift.taken_user_id = @user.id
-        # TODO: doesn't throw error but doesn't persist to DB
+        # shift = Shift.find_by id: shift_id
+        Shift.update(shift_id, :taken_user_id => @user.id)
+        # TODO: persists to DB but doesn't show as updated in same terminal session
     # UPDATE shifts
     # SET shift.taken_user_id = @user.id
     # WHERE shift.shift_id == shift_id
