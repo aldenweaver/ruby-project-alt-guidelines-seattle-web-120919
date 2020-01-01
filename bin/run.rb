@@ -1,6 +1,8 @@
 require_relative '../config/environment'
+# require 'artii'
 
-puts "hello world"
+# a = Artii::Base.new :font => 'slant'
+# a.asciify('Art!')
 
 cli = CommandLineInterface.new
 cli.run
