@@ -1,4 +1,11 @@
-#     def offer_or_search 
+#     
+  puts "Shift ID:  #{shift.id}"
+            puts "User ID:  #{shift.user_id}"
+            puts "Store ID:  #{shift.store_id}"
+            puts "Start Time:  #{shift.start_time}"
+            puts "End Time:  #{shift.end_time}"
+            puts "Taken User ID:  #{shift.taken_user_id}"
+def offer_or_search 
 #         puts "Would you like to offer up a shift (type 'offer'),
 #                 search for a shift (type 'search'),
 #                 delete a shift (type 'delete'),
