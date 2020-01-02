@@ -5,7 +5,6 @@ require_relative 'store'
 
 class CommandLineInterface
     @user = User.new
-    @shifts = []
 
     def run
         greet
@@ -13,7 +12,6 @@ class CommandLineInterface
         login
 
         action_ask
-        # offer_or_search
     end
 
     #User is greeted and prompted with instructions
@@ -23,22 +21,22 @@ class CommandLineInterface
 
     # User logs in by entering user ID or username 
     # (no password, add user-friendly fail) - read
+    # TODO: also show shifts they have taken 
+    # by comparing to taken_user_id
+    # TODO: add fail happy
     def login
         puts "Please enter your username: "
         username = gets.chomp
-        # puts username
-        # binding.pry
+
         @user = User.find_by(login: username)
-        @shifts = Shift.all
-        # TODO: add fail happy
 
         puts "Your upcoming shifts are: \n"
         puts show_shifts(@user.shifts)
 
-        # TODO: also show shifts they have taken 
-        # by comparing to taken_user_id
+    
     end
 
+    # TODO: Parse out start/end day and make pretty with columns
     def show_shifts(shifts)
         shifts.each do |shift|
             puts "Shift ID:  #{shift.id}"
@@ -48,8 +46,6 @@ class CommandLineInterface
             puts "End Time:  #{shift.end_time}"
             puts "Taken User ID:  #{shift.taken_user_id}"
             puts "\n"
-            # puts shift.user_id
-            # TODO: Table formatting, date/time formatting
         end
     end
 
@@ -61,8 +57,7 @@ class CommandLineInterface
         puts "To take a shift, enter 'take ' and the shift ID."
         
         # CREATE
-        puts "To offer a shift, enter 'offer ' and the store ID, 
-            start time, and end time in x format."
+        puts "To offer a shift, enter 'offer ' and the store ID"
         
         # DELETE
         puts "To delete a shift, enter 'delete ' and the shift ID."
@@ -76,13 +71,13 @@ class CommandLineInterface
             all_open_shifts
             action_ask
         elsif response.start_with?("take ")
-            # parse response and pass
             shift_id = response.delete "take "
             take_shift(shift_id)
             action_ask
-        # elsif response.start_with?("offer ")
-        #     offer_shift(store_id, start_time, end_time)
-        # action_ask
+        elsif response.start_with?("offer ")
+            store_id = response.delete "offer "
+            offer_shift(store_id)
+            action_ask
         elsif response.start_with?("delete ")
             shift_id = response.delete "delete "
             delete_shift(shift_id)
@@ -96,32 +91,28 @@ class CommandLineInterface
     # READ
     # # User can search for all shifts with 
     # # all_open_shifts command - read
-    def all_open_shifts
-        # TODO: shows all shifts regardless of whether or not they are open; fix this
-        show_shifts(@shifts)
-
-        # Will return only shifts that are available; 
-#         # i.e. shifts that have empty taken_user_ids
-#         SELECT * FROM shifts WHERE taken_user_id IS NULL
-#         # Handle not found error
-#         # puts "No empty shifts found, please try again later!"
-# 
+    # TODO: shows all shifts regardless of whether or not they are open; fix this
+    # Should return only shifts that are available; 
+    # i.e. shifts that have empty taken_user_ids
+    # SELECT * FROM shifts WHERE taken_user_id IS NULL
+    # Handle not found error
+    # puts "No empty shifts found, please try again later!"
+    def all_open_shifts        
+        show_shifts(Shift.all)
     end
 
-    # # UPDATE
-     # # Users can take a shift using 
-    # # take_shift shift_id - update 
-    # # (updates the user_id on the shift)
-    def take_shift(shift_id)
-        # shift = Shift.find_by id: shift_id
-        Shift.update(shift_id, :taken_user_id => @user.id)
-        # TODO: persists to DB but doesn't show as updated in same terminal session
+    # UPDATE
+    # Users can take a shift using take_shift shift_id - update 
+    # (updates the user_id on the shift)
     # UPDATE shifts
     # SET shift.taken_user_id = @user.id
     # WHERE shift.shift_id == shift_id
     # change taken_user_id from null to current user_id
-    # Handle if taken_user_id is not null?
-    puts "Shift #{shift_id} successfully taken."
+    # TODO: Handle if taken_user_id is not null - they shouldn't be able to take it
+    def take_shift(shift_id)
+        Shift.update(shift_id, :taken_user_id => @user.id)
+
+        puts "Shift #{shift_id} successfully taken."
     end
 
     # # CREATE
@@ -131,16 +122,38 @@ class CommandLineInterface
     # # update or create (searches for shift; 
     # # if shift is there, it updates the user_id on the shift; 
     # # if the shift is not there it creates an entry in the shifts table)
-    def offer_shift(store_id, start_time, end_time)
+    def offer_shift(store_id)
+        puts "Please enter the start date (YYYY-MM-DD): "
+        start_date = gets.chomp
+
+        puts "Please enter the end date (YYYY-MM-DD): "
+        end_date = gets.chomp 
+
+        puts "Please enter the start time (HH:MM): "
+        start_time = gets.chomp 
+
+        puts "Please enter the end time (HH:MM): "
+        end_time = gets.chomp 
+
+        # Combine date and time from user into DateTime to store in DB
+        start_datetime = DateTime.parse(start_date + " " + start_time)
+        end_datetime = DateTime.parse(end_date + " " + end_time)
+
+        Shift.create(
+            :user_id => @user.id,
+            :store_id => store_id,
+            :start_time => start_datetime,
+            :end_time => end_datetime,
+            :taken_user_id => nil)
     end
     
-    # # DELETE
-    # # User can delete a shift they have offered - 
-    # # delete (deletes an entry from the shifts table)
+    # DELETE #
+    # User can delete a shift they have offered - 
+    # delete (deletes an entry from the shifts table)
+    # DELETE * FROM shifts WHERE shift_id == shift_id
+    # TODO: Handle not found error
+    # TODO: User can only delete a shift with their id on it
      def delete_shift(shift_id)
-#     #   DELETE * FROM shifts WHERE shift_id == shift_id
-#     # Handle not found error
-#     # Provide success message
         Shift.find(shift_id).destroy
         puts "Shift #{shift_id} successfully deleted."
     end

@@ -12,6 +12,5 @@
         user_id: User.all.sample.id, 
         store_id: Store.all.sample.id, 
         start_time: DateTime.now + (rand * 30), 
-        end_time: DateTime.now + (rand * 30), 
-        taken_user_id: User.all.sample.id)
+        end_time: DateTime.now + (rand * 30))
 end
