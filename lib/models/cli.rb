@@ -16,6 +16,8 @@ class CommandLineInterface
 
     #User is greeted and prompted with instructions
     def greet
+        a = Artii::Base.new
+        puts a.asciify('Shift Chains')
         puts "Welcome to Shift Chains!"
     end
 
