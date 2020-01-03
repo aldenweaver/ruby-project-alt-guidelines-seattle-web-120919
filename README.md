@@ -1,6 +1,16 @@
 Module One Final Project
+Alden Weaver
+01/03/2020
 ========================
 
+Shift Chains is an app targeted at chain store employees that gives them a way to easily trade shifts. It allows employees to cover shifts at any store. Employees can see the shifts they have and have taken, offer shifts, take shifts, and edit/delete the shifts they have offered. I chose this subject because I am working as a barista at Starbucks part-time while I go to school. We currently use GroupMe for trading shifts, but it is more of a chat app, not an app targeted at trading shifts. I wanted to make an easy way for employees at stores, especially chain stores, to offer up their shifts and take open shifts. Employees are able to take shifts at any store they want, making it easy to fill gaps in scheduling.
+
+This project was a great way to learn more about ActiveRecord. I was surprised at how much that did for me. I also learned how to migrate a database and seed it with fake data. I was unfamiliar with getting user input from the command line, so it was cool to learn about how to communicate back and forth with users via the CLI. Additionally, I enjoyed exploring the tools available to create a better CLI user experience, such as artii and colorize, which create ASCII art and color text and background (respectively).
+
+To install this project, download it and run bundle install. Then run “rake db:seed” to create entries in a database. Running “ruby bin/rub.rb” will run the program and ask you for a login. Make sure you type in a username that is in the database full of fake data, otherwise it will not work. After entering in a correct username, the program will display the user’s shifts (both the shifts originally assigned to that user and the shifts they have taken) and give a menu of other actions the user can take.
+
+
+========================
 Congratulations, you're at the end of module one! You've worked crazy hard to get here and have learned a ton.
 
 For your final project, you'll be building a Command Line Application.
